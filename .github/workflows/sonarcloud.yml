@@ -1,19 +1,18 @@
-name: SonarCloud Analysis
+name: SonarCloud Scan
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
 jobs:
-  build:
-    name: Build and analyze
+  sonarcloud:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
+        uses: SonarSource/sonarqube-scan-action@v5
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: https://sonarcloud.io
+        with:
+          projectBaseDir: .
